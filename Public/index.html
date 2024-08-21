@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mirage - MD --- MultiDevice Whatsapp User Bot!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .bg-animation {
+            background: linear-gradient(300deg, #8a3ab9, #e95950, #fccc63, #16a34a, #4481eb, #b53471);
+            background-size: 1200% 1200%;
+            animation: shineAnimation 15s ease infinite;
+        }
+
+        @keyframes shineAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .button-animation {
+            transition: transform 0.3s ease;
+        }
+
+        .button-animation:hover {
+            transform: scale(1.1);
+        }
+
+        .futuristic-text {
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: neonGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonGlow {
+            from {
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            }
+
+            to {
+                text-shadow: 0 0 20px rgba(255, 255, 255, 1);
+            }
+        }
+
+        .typing-text {
+            font-family: 'Orbitron', sans-serif;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 5s steps(40, end) infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        .sci {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sci li {
+            list-style: none;
+            margin: 0 20px;
+        }
+
+        .sci li a {
+            display: block;
+            position: relative;
+            width: 60px;
+            height: 60px;
+            background: #fff;
+            color: #162938;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            border-radius: 50%;
+            font-size: 2em;
+            z-index: 1;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: 0.5s;
+        }
+
+        .sci li a:hover {
+            transform: translateY(-10px);
+        }
+
+        .sci li a .icon {
+            font-size: 1.5em;
+            transition: 0.5s;
+            top: 10px;
+        }
+
+        .sci li a:hover .icon {
+            transform: scale(1.4);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <!-- Include another icon provider library -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hacxk - MD --- MultiDevice Whatsapp User Bot!</title>
+  <link href="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+  <style>
+    /* ... (Your existing CSS styles remain unchanged) ... */
+  </style>
+</head>
+
+<body class="bg-animation min-h-screen relative">
+
+  <header class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex justify-between items-center">
+        <a href="#" class="text-gray-900 font-bold text-xl">Mirage</a>
+        <nav class="hidden sm:flex space-x-4">
+          <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-100">Home</a>
+          <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-100">About</a>
+          <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-100">Services</a>
+          <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-gray-900 hover:bg-gray-100">Contact</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex flex-col justify-center items-center h-screen">
+    <section class="text-center text-white mb-8">
+      <h1 class="text-5xl font-bold mb-4 futuristic-text">Mirage - MD WhatsApp User Bot</h1>
+      <p class="text-xl animate-bounce">Thanks For Your Support!</p>
+    </section>
+  
+    <section class="bg-white rounded-lg p-8 shadow-2xl animate-pulse w-96 mb-8">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">
+            Mirage  Control Panel
+        </h2>
+        <div id="botStatus" class="text-center mb-4"></div>
+        <div class="flex flex-col space-y-4">
+            <button id="startBotButton" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300">Start Bot</button>
+            <button id="stopBotButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300" disabled>Stop Bot</button>
+            <button id="restartBotButton" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300" disabled>Restart Bot</button>
+        </div>
+    </section>
+    
+
+    <section class="mt-8">
+      <div class="flex justify-center items-center mb-8">
+        <div class="w-8 h-8 rounded-full bg-white mx-2 animate-pulse"></div>
+      </div>
+      <div class="typing-text text-xl">
+        <p>Experience the Future of WhatsApp Automation...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="sci fixed bottom-20 left-1/2 transform -translate-x-1/2">
+    </footer>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.1/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const startButton = document.getElementById('startBotButton');
+        const stopButton = document.getElementById('stopBotButton');
+        const restartButton = document.getElementById('restartBotButton');
+        const botStatus = document.getElementById('botStatus');
+    
+        startButton.addEventListener('click', () => {
+            socket.emit('startBot');
+        });
+    
+        stopButton.addEventListener('click', () => {
+            socket.emit('stopBot');
+        });
+    
+        restartButton.addEventListener('click', () => {
+            socket.emit('restartBot');
+        });
+    
+        // Update UI on socket events
+        socket.on('botStarted', (data) => {
+            botStatus.textContent = data.message;
+            startButton.disabled = true;
+            stopButton.disabled = false;
+            restartButton.disabled = false;
+        });
+    
+        socket.on('botStopped', (data) => {
+            botStatus.textContent = data.message;
+            startButton.disabled = false;
+            stopButton.disabled = true;
+            restartButton.disabled = true;
+        });
+    
+        socket.on('botRestarted', (data) => {
+            botStatus.textContent = data.message;
+        });
+    
+        // Add error handling for socket events
+        socket.on('botAlreadyRunning', (data) => {
+            botStatus.textContent = data.message;
+        });
+    
+        socket.on('botAlreadyStopped', (data) => {
+            botStatus.textContent = data.message;
+        });
+    
+        // Handle socket connection errors
+        socket.on('connect_error', (error) => {
+            console.error('Socket connection error:', error);
+        });
+    
+        // ... other script logic ...
+    </script> 
+</body>
+</html>
