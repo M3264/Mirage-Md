@@ -14,18 +14,28 @@ module.exports = {
         const startTime = Date.now();
         const pingMessage = await sock.sendMessage(m.key.remoteJid, { text: '⚡ Calculating commands...' }, { quoted: m });
         const responseTime = Date.now() - startTime;
-        const profilePicUrl = await sock.profilePictureUrl(m.key.remoteJid.endsWith('@g.us') ? m.key.participant : m.key.remoteJid, 'image');
+
+        // Try to fetch the profile picture
+        let profilePicUrl;
+        try {
+            profilePicUrl = await sock.profilePictureUrl(m.key.remoteJid.endsWith('@g.us') ? m.key.participant : m.key.remoteJid, 'image');
+        } catch (err) {
+            // If an error occurs, use the default image URL
+            console.log('Failed to fetch profile picture, using default image:', err.message);
+            profilePicUrl = 'https://telegra.ph/file/dc7449a72b1a5ae98d047.jpg';
+        }
+
         const downloadPath = path.join(__dirname, '..', 'temp');
         fs.mkdirSync(downloadPath, { recursive: true }); // Ensure the temp folder exists
         userProfilePicPath = path.join(downloadPath, `${m.key.remoteJid.endsWith('@g.us') ? m.key.participant : m.key.remoteJid}.jpg`);
         await downloadImage(profilePicUrl, userProfilePicPath);
 
-        const prefix = '/';
+        const prefix = '.';
         const botUptime = process.uptime();
 
         // Dynamically build commandTypes
         const commandTypes = {};
-        let totalCommands = 0; 
+        let totalCommands = 0;
         for (const commandKey of Object.keys(commands)) {
             const command = commands[commandKey];
             if (command.commandType) {
@@ -45,10 +55,10 @@ module.exports = {
         const shuffledTypes = shuffleArray(Object.keys(commandTypes));
 
         // Menu Configuration (Customize this!)
-        const menuTitle =   `🌸  ${settings.botMenuTitle}  🌸`; 
-        const menuSeparator = "╭• ─────────── ✾ ─────────── •╮"; 
-        const infoEmoji = "📜"; 
-        const ownerEmoji = "👤"; 
+        const menuTitle = `🌸  ${settings.botMenuTitle}  🌸`;
+        const menuSeparator = "╭• ─────────── ✾ ─────────── •╮";
+        const infoEmoji = "📜";
+        const ownerEmoji = "👤";
 
         let menuText = `
 ${menuSeparator}
@@ -77,7 +87,7 @@ ${menuSeparator}
         // Dynamically Generate Command Sections
         for (const type of shuffledTypes) {
             const commandsOfType = commandTypes[type];
-            const emoji = commandTypes[type][0]?.emoji || '✨'; 
+            const emoji = commandTypes[type][0]?.emoji || '✨';
             menuText += `
 ╭─────「 ${emoji}  ${type}  ${emoji} 」─────╮
 `;
@@ -147,4 +157,4 @@ async function downloadImage(url, filePath) {
         writer.on('finish', resolve);
         writer.on('error', reject);
     });
-}
+                }
