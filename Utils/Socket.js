@@ -296,31 +296,6 @@ const startMirage = async (io) => {
                         default:
                             console.log(chalk.cyan('Connection closed with bot. Trying to run again. ⚠️'));
                             sock.ev.removeAllListeners();
-                            await delay(5000); // Add a delay before reconnecting
-                            startMirage(io);
-                            await sock.ws.close();
-                            return;
-                    }
-                } catch (error) {
-                    console.error(chalk.red('Error occurred during connection close:'), error.message);
-                }
-            }
-
-            //    // Enable read receipts
-            sock.sendReadReceiptAck = true;
-        });
-
-        sock.ev.on('creds.update', saveCreds);
-
-
-        await test(sock)
-
-
-    } catch (error) {
-        console.error(chalk.red('An error occurred:'), error.message);
-    }
-};
-
 async function test(sock) {
     // Listen for new messages
     sock.ev.on('messages.upsert', async ({ messages }) => {
@@ -352,7 +327,7 @@ async function test(sock) {
 
             if (msg) {
                 const messageContent = msg.message?.conversation || msg.message?.extendedTextMessage?.text || 'Unknown content';
-                const ownerNumber = settings.ownerNumbers[0]; // Use the first owner number from settings.js
+                const ownerNumber = settings.OWNER_NUMBER[0]; // Use the first owner number from settings.js
                 const ownerJid = `${ownerNumber}@s.whatsapp.net`; // Format the owner number as a JID
 
                 // Log the deleted message
