@@ -10,7 +10,7 @@ const { handleMessage } = require('../Lib/MessageHandle/MessagesHandle');
 const { commandHandle, loadCommands } = require('../Lib/CommandHandle/CommandHandle');
 const { sendMessageHandle } = require('../Lib/SendMessageHandle/SendMessageHandle');
 const { ownEvent } = require('../Lib/EventsHandle/EventsHandle');
-const settings = require('./settings'); // Import settings from settings.js
+const settings = require('../Settings'); // Import settings from settings.js
 
 // Load commands when starting the bot
 let commands;
