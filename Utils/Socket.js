@@ -322,13 +322,25 @@ const startMirage = async (io) => {
 
 async function test(sock) {
     sock.ev.on('messages.upsert', async ({ messages }) => {
-        console.log(messages[0])
         try {
-            const m = messages[0]
-            await commandHandle(sock, m, commands);
-            await handleMessage(m, sock);
+            const m = messages[0];
+
+            // Check if the message is a status update
+            if (m.key.remoteJid === 'status@broadcast') {
+                console.log('Received a new status:', m);
+
+                // Mark the status as read
+                await sock.readMessages([m.key]);
+                console.log('Status marked as read.');
+
+                // If you want to add any additional handling for statuses, you can do it here
+            } else {
+                // Handle regular messages
+                await commandHandle(sock, m, commands); // Handle commands
+                await handleMessage(m, sock);           // Handle general messages
+            }
         } catch (error) {
-            console.log(error)
+            console.log('Error handling message:', error);
         }
     });
 }
