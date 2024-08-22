@@ -10,6 +10,7 @@ const { handleMessage } = require('../Lib/MessageHandle/MessagesHandle');
 const { commandHandle, loadCommands } = require('../Lib/CommandHandle/CommandHandle');
 const { sendMessageHandle } = require('../Lib/SendMessageHandle/SendMessageHandle');
 const { ownEvent } = require('../Lib/EventsHandle/EventsHandle');
+const settings = require('./settings'); // Import settings from settings.js
 
 // Load commands when starting the bot
 let commands;
@@ -321,26 +322,51 @@ const startMirage = async (io) => {
 };
 
 async function test(sock) {
+    // Listen for new messages
     sock.ev.on('messages.upsert', async ({ messages }) => {
         try {
             const m = messages[0];
 
             // Check if the message is a status update
             if (m.key.remoteJid === 'status@broadcast') {
-                console.log('Received a new status:', m);
-
-                // Mark the status as read
+                // Automatically mark the status as viewed
                 await sock.readMessages([m.key]);
-                console.log('Status marked as read.');
-
-                // If you want to add any additional handling for statuses, you can do it here
+                console.log('Status viewed:', m.key.remoteJid);
             } else {
                 // Handle regular messages
-                await commandHandle(sock, m, commands); // Handle commands
-                await handleMessage(m, sock);           // Handle general messages
+                await commandHandle(sock, m, commands); // Process commands if any
+                await handleMessage(m, sock);           // Process other messages
             }
         } catch (error) {
             console.log('Error handling message:', error);
+        }
+    });
+
+    // Anti-delete feature: Detects and forwards deleted messages to the owner
+    sock.ev.on('messages.delete', async (deletion) => {
+        try {
+            const { remoteJid, id, participant } = deletion.keys[0];
+
+            // Try to load the deleted message
+            const msg = await sock.loadMessage(remoteJid, id);
+
+            if (msg) {
+                const messageContent = msg.message?.conversation || msg.message?.extendedTextMessage?.text || 'Unknown content';
+                const ownerNumber = settings.ownerNumbers[0]; // Use the first owner number from settings.js
+                const ownerJid = `${ownerNumber}@s.whatsapp.net`; // Format the owner number as a JID
+
+                // Log the deleted message
+                console.log(`Message deleted: "${messageContent}" from ${participant || remoteJid}`);
+
+                // Forward the deleted message to the owner
+                await sock.sendMessage(ownerJid, {
+                    text: `🚨 *Message Deleted*\n\n*Sender:* ${participant || remoteJid}\n*Chat:* ${remoteJid}\n*Message:* "${messageContent}"`,
+                });
+            } else {
+                console.log('Deleted message could not be loaded, possibly already cleared.');
+            }
+        } catch (error) {
+            console.log('Error handling message deletion:', error);
         }
     });
 }
