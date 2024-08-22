@@ -1,7 +1,7 @@
 global.settings = {
   botName: 'MIRAGE',
   ownerNames: ['Miracle'], // Array of owner names/usernames
-  ownerNumbers: ['2347013159244', '2347034313883'], // Array of owner phone numbers (with country code)
+  ownerNumbers: ['2347013159244'], // Array of owner phone numbers (with country code)
   workMode: 'Public',
 
   maxDownloadSize: 50, // 50 MB download limit in bytes
